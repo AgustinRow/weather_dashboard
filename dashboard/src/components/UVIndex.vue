@@ -24,6 +24,7 @@ export default {
      height: "100%",
      containerbackgroundopacity: 0,
      dataformat: "json",
+     renderAt: 'chart-container',
      datasource: {
        chart: {
          caption: "Wind speed average",
@@ -95,7 +96,23 @@ export default {
              baseRadius: "0"
            }
          ]
-       }
+       },
+       trendpoints: {
+        point: [
+            {
+                startValue: "",
+                displayValue: " ",
+                color: "",
+                borderColor: "",
+                thickness: "4.5",
+                alpha: "100",
+                useMarker: "1",
+                valueInside: "0",
+                innerRadius: "75",
+                markerRadius: "-7"
+            }
+        ]
+    }
      }
    };
  },

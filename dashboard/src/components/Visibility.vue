@@ -18,78 +18,393 @@
 export default {
  props: ["highlights"],
  components: {},
- methods: {},
+ methods: {
+ setWindStatus: function (){
+    var directionVal = void 0;
+    var directionDisplay = void 0;
+    var colorRangeArr = [{ "minValue": "0", "maxValue": "30", "code": p_color }, // s - south
+    { "minValue": "30", "maxValue": "45", "code": s_color }, // ssw - south south west
+    { "minValue": "45", "maxValue": "75", "code": s_color }, // sw - south west
+    { "minValue": "75", "maxValue": "90", "code": s_color }, // wsw - west south west
+    { "minValue": "90", "maxValue": "120", "code": s_color }, // w - west
+    { "minValue": "120", "maxValue": "135", "code": s_color }, // wnw - west north west
+    { "minValue": "135", "maxValue": "165", "code": s_color }, // nw - north west
+    { "minValue": "165", "maxValue": "180", "code": s_color }, // nnw - north north west
+    { "minValue": "180", "maxValue": "210", "code": s_color }, // n - north
+    { "minValue": "210", "maxValue": "225", "code": s_color }, // nne - north north east
+    { "minValue": "225", "maxValue": "255", "code": s_color }, // ne - north east
+    { "minValue": "255", "maxValue": "270", "code": s_color }, // ene - east north east
+    { "minValue": "270", "maxValue": "300", "code": s_color }, // e - east
+    { "minValue": "300", "maxValue": "315", "code": s_color }, // ese - east south east
+    { "minValue": "315", "maxValue": "345", "code": s_color }, // se - south east
+    { "minValue": "345", "maxValue": "360", "code": s_color }];
+    switch (this.highlights.windStatus.windDirection) {
+        case "SOUTH":
+            {
+                // south
+                for (var _i = 0; _i < colorRangeArr.length; _i++) {
+                    if (_i === 0) {
+                        colorRangeArr[_i].code = p_color;
+                    } else {
+                        colorRangeArr[_i].code = s_color;
+                    }
+                }
+                directionVal = "15";
+                directionDisplay = "↓  S";
+            }
+            break;
+
+        case "SOUTHSOUTHWEST":
+            {
+                // south south west
+                for (var _i2 = 0; _i2 < colorRangeArr.length; _i2++) {
+                    if (_i2 === 1) {
+                        colorRangeArr[_i2].code = p_color;
+                    } else {
+                        colorRangeArr[_i2].code = s_color;
+                    }
+                }
+                directionVal = "37.5";
+                directionDisplay = "↙ SSW";
+            }
+            break;
+
+        case "SOUTHWEST":
+            {
+                // south west
+                for (var _i3 = 0; _i3 < colorRangeArr.length; _i3++) {
+                    if (_i3 === 2) {
+                        colorRangeArr[_i3].code = p_color;
+                    } else {
+                        colorRangeArr[_i3].code = s_color;
+                    }
+                }
+                directionVal = "60";
+                directionDisplay = "↙ SW";
+            }
+            break;
+
+        case "WESTSOUTHWEST":
+            {
+                // west south west
+                for (var _i4 = 0; _i4 < colorRangeArr.length; _i4++) {
+                    if (_i4 === 3) {
+                        colorRangeArr[_i4].code = p_color;
+                    } else {
+                        colorRangeArr[_i4].code = s_color;
+                    }
+                }
+                directionVal = "82.5";
+                directionDisplay = "↙ WSW";
+            }
+            break;
+
+        case "WEST":
+            {
+                // west
+                for (var _i5 = 0; _i5 < colorRangeArr.length; _i5++) {
+                    if (_i5 === 4) {
+                        colorRangeArr[_i5].code = p_color;
+                    } else {
+                        colorRangeArr[_i5].code = s_color;
+                    }
+                }
+                directionVal = "105";
+                directionDisplay = "← W";
+            }
+            break;
+
+        case "WESTNORTHWEST":
+            {
+                // west north west
+                for (var _i6 = 0; _i6 < colorRangeArr.length; _i6++) {
+                    if (_i6 === 5) {
+                        colorRangeArr[_i6].code = p_color;
+                    } else {
+                        colorRangeArr[_i6].code = s_color;
+                    }
+                }
+                directionVal = "127.5";
+                directionDisplay = "↖ WNW";
+            }
+            break;
+
+        case "NORTHWEST":
+            {
+                // north west
+                for (var _i7 = 0; _i7 < colorRangeArr.length; _i7++) {
+                    if (_i7 === 6) {
+                        colorRangeArr[_i7].code = p_color;
+                    } else {
+                        colorRangeArr[_i7].code = s_color;
+                    }
+                }
+                directionVal = "150";
+                directionDisplay = "↖ NW";
+            }
+            break;
+
+        case "NORTHNORTHWEST":
+            {
+                // north north west
+                for (var _i8 = 0; _i8 < colorRangeArr.length; _i8++) {
+                    if (_i8 === 7) {
+                        colorRangeArr[_i8].code = p_color;
+                    } else {
+                        colorRangeArr[_i8].code = s_color;
+                    }
+                }
+                directionVal = "172.5";
+                directionDisplay = "↖ NNW";
+            }
+            break;
+
+        case "NORTH":
+            {
+                // north
+                for (var _i9 = 0; _i9 < colorRangeArr.length; _i9++) {
+                    if (_i9 === 8) {
+                        colorRangeArr[_i9].code = p_color;
+                    } else {
+                        colorRangeArr[_i9].code = s_color;
+                    }
+                }
+                directionVal = "195";
+                directionDisplay = "↑ N";
+            }
+            break;
+
+        case "NORTHNORTHEAST":
+            {
+                // north north east
+                for (var _i10 = 0; _i10 < colorRangeArr.length; _i10++) {
+                    if (_i10 === 9) {
+                        colorRangeArr[_i10].code = p_color;
+                    } else {
+                        colorRangeArr[_i10].code = s_color;
+                    }
+                }
+                directionVal = "217.5";
+                directionDisplay = "↗ NNE";
+            }
+            break;
+
+        case "NORTHEAST":
+            {
+                // north east
+                for (var _i11 = 0; _i11 < colorRangeArr.length; _i11++) {
+                    if (_i11 === 10) {
+                        colorRangeArr[_i11].code = p_color;
+                    } else {
+                        colorRangeArr[_i11].code = s_color;
+                    }
+                }
+                directionVal = "240";
+                directionDisplay = "↗ NE";
+            }
+            break;
+
+        case "EASTNORTHEAST":
+            {
+                // east north east
+                for (var _i12 = 0; _i12 < colorRangeArr.length; _i12++) {
+                    if (_i12 === 11) {
+                        colorRangeArr[_i12].code = p_color;
+                    } else {
+                        colorRangeArr[_i12].code = s_color;
+                    }
+                }
+                directionVal = "262.5";
+                directionDisplay = "↗ ENE";
+            }
+            break;
+
+        case "EAST":
+            {
+                // east
+                for (var _i13 = 0; _i13 < colorRangeArr.length; _i13++) {
+                    if (_i13 === 12) {
+                        colorRangeArr[_i13].code = p_color;
+                    } else {
+                        colorRangeArr[_i13].code = s_color;
+                    }
+                }
+                directionVal = "285";
+                directionDisplay = "→ E";
+            }
+            break;
+
+        case "EASTSOUTHEAST":
+            {
+                // east south east
+                for (var _i14 = 0; _i14 < colorRangeArr.length; _i14++) {
+                    if (_i14 === 13) {
+                        colorRangeArr[_i14].code = p_color;
+                    } else {
+                        colorRangeArr[_i14].code = s_color;
+                    }
+                }
+                directionVal = "307.5";
+                directionDisplay = "↘ ESE";
+            }
+            break;
+
+        case "SOUTHEAST":
+            {
+                // south east
+                for (var _i15 = 0; _i15 < colorRangeArr.length; _i15++) {
+                    if (_i15 === 14) {
+                        colorRangeArr[_i15].code = p_color;
+                    } else {
+                        colorRangeArr[_i15].code = s_color;
+                    }
+                }
+                directionVal = "330";
+                directionDisplay = "↘ SE";
+            }
+            break;
+
+        case "SOUTHSOUTHEAST":
+            {
+                // south south east
+                for (var _i16 = 0; _i16 < colorRangeArr.length; _i16++) {
+                    if (_i16 === 15) {
+                        colorRangeArr[_i16].code = p_color;
+                    } else {
+                        colorRangeArr[_i16].code = s_color;
+                    }
+                }
+                directionVal = "352.5";
+                directionDisplay = "↘ SSE";
+            }
+            break;
+
+        default:
+            alert("Please pass valid parameters");
+            break;
+    }
+    this.datasource.colorRange.color = colorRangeArr;
+    this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windGust;
+    this.datasource.annotations.groups[0].items[0].color = p_color;
+    this.datasource.annotations.groups[0].items[1].text = directionDisplay;
+    this.datasource.annotations.groups[0].items[1].color = p_color;
+    this.datasource.dials.dial[0].value = directionVal;
+    this.datasource.trendpoints.point[0].startValue = directionVal;
+    this.datasource.trendpoints.point[0].color = p_color;
+    this.datasource.trendpoints.point[0].borderColor = p_color;
+    //var data = JSON.parse(localStorage.getItem('dataForWindChart'));
+    //data.dataSource = windStausChartData;
+    //return data;
+ }
+ },
  computed: {},
  data() {
    return {
-     type: "hlineargauge",
-     width: "100%",
-     height: "100%",
-     containerbackgroundopacity: 0,
-     dataformat: "json",
-     creditLabel: false,
-     datasource: {
-       chart: {
-         caption: "Air Visibility",
-         captionFontBold: "0",
-         captionFontColor: "#000000",
-         baseFont: "Roboto",
-         numberSuffix: " km",
-         lowerLimit: "0",
-         upperLimit: "40",
-         showPointerShadow: "1",
-         animation: "1",
-         transposeAnimation: "1",
-         theme: "fusion",
-         bgAlpha: "0",
-         canvasBgAlpha: "0",
-         valueFontSize: "20",
-         valueFontColor: "#000000",
-         valueFontBold: "1",
-         pointerBorderAlpha: "0",
-         chartBottomMargin: "40",
-         captionPadding: "30",
-         chartTopMargin: "30"
-       },
-       colorRange: {
-         color: [
-           {
-             minValue: "0",
-             maxValue: "4",
-             label: "Fog",
-             code: "#6297d9"
-           },
-           {
-             minValue: "4",
-             maxValue: "10",
-             label: "Haze",
-             code: "#7DA9E0"
-           },
-           {
-             minValue: "10",
-             maxValue: "40",
-             label: "Clear",
-             code: "#D8EDFF"
-           }
-         ]
-       },
-       pointers: {
-         pointer: [
-           {
-             value: this.highlights.visibility.toString()
-           }
-         ]
-       }
-     }
-   };
- },
+    type: 'angulargauge',
+    width: '100%',
+    height: '100%',
+    containerBackgroundOpacity:'0.8',
+    dataFormat: 'json',
+    renderAt: 'chart-container',
+    creditLabel: false,
+    datasource: {
+        chart: {
+            caption: "Wind speed average2",
+            bgColor:"#ffffff",
+            bgAlpha:"0",
+            manageresize: "1",
+            gaugeStartAngle: "285",
+            gaugeEndAngle: "-75",
+            upperLimit: "360",
+            lowerLimit: "0",
+            gaugeFillMix: "{light+0}",
+            showShadow: "0",
+            showGaugeBorder: "0",
+            showTickValues: "0",
+            majorTMAlpha: "0",
+            minorTMAlpha: "0",
+            pivotRadius: "0",
+            pivotBorderThickness: "0",
+            gaugeInnerRadius:"65",
+            gaugeOuterRadius:"80",
+            baseFont:"Roboto",
+            baseFontSize:"14",
+            baseFontBold: "1",
+            gaugeFillAlpha: "10",
+            showBorder: "0",
+            showToolTip: "0"
+        },
+
+        colorRange: {
+            "color": ""
+        },
+
+        annotations: {
+            groups: [{
+                items: [{
+                    id: "speeddesc",
+                    type: "text",
+                    text: "",
+                    x: "$gaugeCenterX",
+                    y: "$gaugeCenterY - 15",
+                    color: "",
+                    bold: "0",
+                    fontSize: "16",
+                    font: "Roboto"
+                }, {
+                    id: "speeddir",
+                    type: "text",
+                    text: "",
+                    x: "$gaugeCenterX",
+                    y: "$gaugeCenterY + 10",
+                    color: "",
+                    bold: "0",
+                    fontSize: "16",
+                    font: "Source Sans Pro Light"
+                }]
+            }]
+        },
+
+        dials: {
+            dial: [
+                {
+                    value: "",
+                    baseWidth: "0",
+                    borderThickness: "0",
+                    radius: "0",
+                    baseRadius: "0"
+                }
+            ]
+        },
+
+        trendpoints: {
+            point: [
+                {
+                    startValue: "",
+                    displayValue: " ",
+                    color: "",
+                    borderColor: "",
+                    thickness: "4.5",
+                    alpha: "100",
+                    useMarker: "1",
+                    valueInside: "0",
+                    innerRadius: "75",
+                    markerRadius: "-7"
+                }
+            ]
+        }
+    }
+}
+},
  watch: {
    highlights: {
      handler: function() {
-       this.datasource.pointers.pointer[0].value = this.highlights.visibility.toString();
+        this.setWindStatus();
+        this.datasource.annotations[0].items[0].text = this.highlights.windStatus.windGust;
+        this.datasource.annotations[0].items[2].text= this.highlights.windStatus.windDirection;
      },
      deep: true
    }
  }
-};
+ }
 </script>

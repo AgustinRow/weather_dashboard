@@ -100,6 +100,8 @@ export default {
      completeWeatherApi: '', // weather api string with lat and long
      rawWeatherData: '', // raw response from weather api
      centralWeatherData:'',
+    p_color:'',
+     s_color:'',
      currentWeather: {
        full_location: '', // for full address
        formatted_lat: '', // for N/S

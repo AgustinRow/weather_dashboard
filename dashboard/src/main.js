@@ -10,6 +10,7 @@ import VueFusionCharts from "vue-fusioncharts";
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
+import colorPalette from "./colorSchema.js";
 
 //Vue.component('l-map', LMap);
 //Vue.component('l-tile-layer', LTileLayer);
