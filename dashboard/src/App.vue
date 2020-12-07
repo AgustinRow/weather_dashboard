@@ -100,8 +100,11 @@ export default {
      completeWeatherApi: '', // weather api string with lat and long
      rawWeatherData: '', // raw response from weather api
      centralWeatherData:'',
-    p_color:'',
+     p_color:'',
      s_color:'',
+     pod:'',
+     bgVal:'',
+     styleObject:{},
      currentWeather: {
        full_location: '', // for full address
        formatted_lat: '', // for N/S
@@ -469,6 +472,31 @@ export default {
        absoluteWindDir
      );
    },
+   //pod will be 'd' or 'n'. It will depends if its day or night
+   parsePodValue: function (){
+     if(this.rawWeatherData.current.dt > this.rawWeatherData.current.sunrise && 
+     this.rawWeatherData.current.dt < this.rawWeatherData.current.sunrise){
+       this.pod= 'd'
+     } else {
+       this.pod='n'
+     }
+   },
+  setBackGroundImgSideBar: function(){
+    var weatherType = windData.data[0].weather.description;
+    //converting it to lowercase
+    this.bgVal = weatherType
+    .split(" ")
+    .join()
+    .replace(/\,|\/+/g, "")
+    .toLowerCase();
+  //adding the pod as a prefix
+    var bgimg = pod + "_" + bgVal + ".svg";
+    this.styleObject.backgroundImage = 'url("img/bgimage/' + bgimg + '")';
+  },
+  setStyleColor: function(){
+    this.p_color = colorPalette["p_" + pod + "_" + bgVal]; //primary
+    this.s_color = colorPalette["s_" + pod + "_" + bgVal];
+  },
 
    // top level for info section
    organizeCurrentWeatherInfo: function() {
