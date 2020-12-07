@@ -2,7 +2,7 @@
  <div id="ancestor">
    <div class="container-fluid" id="app">
      <div class="row">
-       <div id="sidebar" class="col-md-3 col-sm-4 col-xs-12 sidebar">
+       <div id="sidebar" class="col-md-3 col-sm-4 col-xs-12 sidebar" v-bind:style="styleObject" v-if="dataReady">
          <div id="search">
            <input
             disabled
@@ -100,8 +100,11 @@ export default {
      completeWeatherApi: '', // weather api string with lat and long
      rawWeatherData: '', // raw response from weather api
      centralWeatherData:'',
-    p_color:'',
+     p_color:'',
      s_color:'',
+     pod:'',
+     bgVal:'',
+     styleObject:{},
      currentWeather: {
        full_location: '', // for full address
        formatted_lat: '', // for N/S
@@ -164,13 +167,13 @@ export default {
      var human = moment(decipher)
        .tz(timezone)
        .format('llll'); //timezone hardcoded for simple purpose
+     
      var timeArray = human.split(' ');
      var timeNumeral = timeArray[4];
      var timeSuffix = timeArray[5];
      var justTime = timeNumeral + ' ' + timeSuffix;
      var monthDateArray = human.split(',');
-     console.log(monthDateArray)
-     var monthDate = monthDateArray[1].trim();
+     var monthDate = monthDateArray[0].trim();
      return {
        fullTime: human,
        onlyTime: justTime,
@@ -331,7 +334,7 @@ export default {
      const miApi= 'https://private-anon-9bb3e70f1c-ambientweather.apiary-mock.com/v1/devices?applicationKey=&apiKey='
      var centralLaPlayita = await axios.get(miApi);
      var weatherApiResponse = await axios.get(this.completeWeatherApi);
-     console.log(weatherApiResponse.data.timezone)
+     //console.log(weatherApiResponse.data.timezone)
      if (weatherApiResponse.status === 200 && centralLaPlayita.status === 200) {
        this.rawWeatherData = weatherApiResponse.data;
        this.centralWeatherData= centralLaPlayita.data[0].lastData;
@@ -356,7 +359,7 @@ export default {
    },
    getSetSummary: function() {
      var currentSummary = this.convertToTitleCase(
-       this.rawWeatherData.currently.summary
+       this.rawWeatherData.current.summary
      );
      if (currentSummary.includes(' And')) {
        currentSummary = currentSummary.replace(' And', ',');
@@ -399,7 +402,7 @@ export default {
      return this.rawWeatherData.hourly.data;
    },
    getSetHourlyTempInfoToday: function() {
-     var unixTime = this.rawWeatherData.currently.time;
+     var unixTime = this.rawWeatherData.current.time;
      var timezone = this.getTimezone();
      var todayMonthDate = this.unixToHuman(timezone, unixTime).onlyMonthDate;
      var hourlyData = this.getHourlyInfoToday();
@@ -449,11 +452,11 @@ export default {
 
    // For Today Highlights
    getSetUVIndex: function() {
-     var uvIndex = this.rawWeatherData.currently.uvIndex;
+     var uvIndex = this.rawWeatherData.current.uvIndex;
      this.highlights.uvIndex = uvIndex;
    },
    getSetVisibility: function() {
-     var visibilityInMiles = this.rawWeatherData.currently.visibility;
+     var visibilityInMiles = this.rawWeatherData.current.visibility;
      this.highlights.visibility = this.mileToKilometer(visibilityInMiles);
    },
    getSetWindStatus: function() {
@@ -469,7 +472,31 @@ export default {
        absoluteWindDir
      );
    },
-
+   //pod will be 'd' or 'n'. It will depends if its day or night
+   parsePodValue: function (){
+     if(this.rawWeatherData.current.dt > this.rawWeatherData.current.sunrise && 
+     this.rawWeatherData.current.dt < this.rawWeatherData.current.sunrise){
+       this.pod= 'd'
+     } else {
+       this.pod='n'
+     }
+   },
+  setBackGroundImgSideBar: function(){
+    var weatherType = windData.data[0].weather.description;
+    //converting it to lowercase
+    this.bgVal = weatherType
+    .split(" ")
+    .join()
+    .replace(/\,|\/+/g, "")
+    .toLowerCase();
+  //adding the pod as a prefix
+    var bgimg = pod + "_" + bgVal + ".svg";
+    this.styleObject.backgroundImage = 'url("img/bgimage/' + bgimg + '")';
+  },
+  setStyleColor: function(){
+    this.p_color = colorPalette["p_" + pod + "_" + bgVal]; //primary
+    this.s_color = colorPalette["s_" + pod + "_" + bgVal];
+  },
    // top level for info section
    organizeCurrentWeatherInfo: function() {
      // data in this.currentWeather
@@ -478,7 +505,7 @@ export default {
      — this.getCoordinates()
      — this.setFormatCoordinates()
      There are lots of async-await involved there.
-     So it's better to keep them there.
+  .backgroundImage = 'url("img/bgimage/' + bgimg + '")';   So it's better to keep them there.
      */
      this.getSetCurrentTime();
      this.getSetCurrentTemp();
