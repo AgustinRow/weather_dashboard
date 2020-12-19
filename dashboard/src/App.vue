@@ -1,9 +1,9 @@
 <template>
  <div id="ancestor">
    <div class="container-fluid" id="app">
-     <div class="row">
-       <div id="sidebar" class="col-md-3 col-sm-4 col-xs-12 sidebar" v-bind:style="styleObject" v-if="dataReady">
-         <div id="search">
+     <div class="row flex-xl-nowrap">
+       <div id="navpanel" class="col-md-3 col-sm-4 col-xs-12 bd-sidebar font-color"  v-bind:style="styleObject" v-if="dataReady" >
+        <div id="search">
            <input
             disabled
              id="location-input"
@@ -13,46 +13,46 @@
            >
            <button id="search-btn" @click="organizeAllDetails">
              <img src="./assets/Search.svg" width="24" height="24">
-           </button>
+           </button> 
          </div>
-         <div id="central-data" class="wrapper-left">Mi central meteorologica
-           {{this.centralWeatherData.name}}
+         <div id="central-data" class="wrapper-left" >
+           {{this.centralWeatherData.info.name}}
          </div>
          <div id="info">
            <div class="wrapper-left">
              <div id="current-weather">
                {{ currentWeather.temp }}
-               <span>°C</span>
+               <span style="color: black">°C</span>
              </div>
              <div id="weather-desc">{{ currentWeather.summary }}</div>
              <div class="temp-max-min">
                <div class="max-desc">
-                 <div id="max-detail">
-                   <i>▲</i>
+                 <div id="max-detail" style="color: black">
+                   <i >▲</i>
                    {{ currentWeather.todayHighLow.todayTempHigh }}
-                   <span>°C</span>
+                   <span style="color: black">°C</span>
                  </div>
-                 <div id="max-summary">at {{ currentWeather.todayHighLow.todayTempHighTime }}</div>
+                <!-- <div id="max-summary">at {{ currentWeather.todayHighLow.todayTempHighTime }}</div>-->
                </div>
                <div class="min-desc">
-                 <div id="min-detail">
+                 <div id="min-detail" style="color: black">
                    <i>▼</i>
                    {{ currentWeather.todayHighLow.todayTempLow }}
-                   <span>°C</span>
+                   <span style="color: black">°C</span>
                  </div>
-                 <div id="min-summary">at {{ currentWeather.todayHighLow.todayTempLowTime }}</div>
+                 <!--<div id="min-summary">at {{ currentWeather.todayHighLow.todayTempLowTime }}</div>-->
                </div>
              </div>
            </div>
            <div class="wrapper-right">
              <div class="date-time-info">
-               <div id="date-desc">
+               <div id="date-desc" style="color: black">
                  <img src="./assets/calendar.svg" width="20" height="20">
                  {{ currentWeather.time }}
                </div>
              </div>
              <div class="location-info">
-               <div id="location-desc">
+               <div id="location-desc" style="color: black">
                  <img
                    src="./assets/location.svg"
                    width="10.83"
@@ -73,8 +73,10 @@
        <dashboard-content
          class="col-md-9 col-sm-8 col-xs-12 content"
          id="dashboard-content"
-         :highlights="highlights"
+         :highlights="highlights" 
          :tempVar="tempVar"
+         :p_color="p_color" 
+         :s_color="s_color"
        ></dashboard-content>
      </div>
    </div>
@@ -105,6 +107,7 @@ export default {
      pod:'',
      bgVal:'',
      styleObject:{},
+     dataReady: false,
      currentWeather: {
        full_location: '', // for full address
        formatted_lat: '', // for N/S
@@ -126,6 +129,8 @@ export default {
        ],
      },
      highlights: {
+       sunrise:'',
+       sunset:'',
        uvIndex: '',
        visibility: '',
        windStatus: {
@@ -337,7 +342,7 @@ export default {
      //console.log(weatherApiResponse.data.timezone)
      if (weatherApiResponse.status === 200 && centralLaPlayita.status === 200) {
        this.rawWeatherData = weatherApiResponse.data;
-       this.centralWeatherData= centralLaPlayita.data[0].lastData;
+       this.centralWeatherData= centralLaPlayita.data[0];
      } else {
        alert('Hmm... Seems like our weather experts are busy!');
      }
@@ -349,8 +354,8 @@ export default {
    getTimezone: function() {
      return this.rawWeatherData.timezone;
    },
-   getSetCurrentTime: function() {
-     var currentTime = this.rawWeatherData.current.dt;
+   getSetCurrentTime: function(time) {
+     var currentTime = time;
      var timezone = this.getTimezone();
      this.currentWeather.time = this.unixToHuman(
        timezone,
@@ -374,7 +379,7 @@ export default {
      this.currentWeather.possibility = possible;
    },
    getSetCurrentTemp: function() {
-     var currentTemp = this.centralWeatherData.tempf;
+     var currentTemp = this.centralWeatherData.lastData.tempf;
      this.currentWeather.temp = this.fahToCel(currentTemp);
    },
    getTodayDetails: function() {
@@ -399,7 +404,7 @@ export default {
      //).onlyTime;
    },
    getHourlyInfoToday: function() {
-     return this.rawWeatherData.hourly.data;
+     return this.rawWeatherData.daily;
    },
    getSetHourlyTempInfoToday: function() {
      var unixTime = this.rawWeatherData.current.time;
@@ -460,12 +465,12 @@ export default {
      this.highlights.visibility = this.mileToKilometer(visibilityInMiles);
    },
    getSetWindStatus: function() {
-     var windSpeedInMiles = this.centralWeatherData.windspdmph_avg2m  ;
-     let windGust= this.centralWeatherData.windgustmph;
+     var windSpeedInMiles = this.centralWeatherData.lastData.windspdmph_avg2m  ;
+     let windGust= this.centralWeatherData.lastData.windgustmph;
      this.highlights.windStatus.windSpeed = this.mileToKnot(
        windSpeedInMiles
      );
-     var absoluteWindDir = this.centralWeatherData.winddir_avg2m;
+     var absoluteWindDir = this.centralWeatherData.lastData.winddir_avg2m;
      this.highlights.windStatus.windDirection = absoluteWindDir;
      this.highlights.windStatus.windGust= this.mileToKnot(windGust);
      this.highlights.windStatus.derivedWindDirection = this.deriveWindDir(
@@ -482,7 +487,7 @@ export default {
      }
    },
   setBackGroundImgSideBar: function(){
-    var weatherType = windData.data[0].weather.description;
+    var weatherType = this.rawWeatherData.current.weather[0].description;
     //converting it to lowercase
     this.bgVal = weatherType
     .split(" ")
@@ -490,12 +495,16 @@ export default {
     .replace(/\,|\/+/g, "")
     .toLowerCase();
   //adding the pod as a prefix
-    var bgimg = pod + "_" + bgVal + ".svg";
+  this.parsePodValue();
+    var bgimg = this.pod + "_" + this.bgVal + ".svg";
     this.styleObject.backgroundImage = 'url("img/bgimage/' + bgimg + '")';
+    this.dataReady= true
   },
   setStyleColor: function(){
-    this.p_color = colorPalette["p_" + pod + "_" + bgVal]; //primary
-    this.s_color = colorPalette["s_" + pod + "_" + bgVal];
+    var colorPalette = JSON.parse(localStorage.getItem("palette"));
+    this.p_color = colorPalette["p_" + this.pod + "_" + this.bgVal]; //primary
+    this.s_color = colorPalette["s_" + this.pod + "_" + this.bgVal];
+    console.log(this.p_color)
   },
    // top level for info section
    organizeCurrentWeatherInfo: function() {
@@ -507,9 +516,12 @@ export default {
      There are lots of async-await involved there.
   .backgroundImage = 'url("img/bgimage/' + bgimg + '")';   So it's better to keep them there.
      */
-     this.getSetCurrentTime();
+
+     this.getSetCurrentTime(this.rawWeatherData.current.dt);
      this.getSetCurrentTemp();
      this.getSetTodayTempHighLowWithTime();
+      this.setBackGroundImgSideBar();
+      this.setStyleColor()
      //this.getSetSummary();
      //this.getSetPossibility();
    },
@@ -526,7 +538,7 @@ export default {
      await this.fetchWeatherData();
      this.organizeCurrentWeatherInfo();
      this.organizeTodayHighlights();
-     this.getSetHourlyTempInfoToday();
+     //this.getSetHourlyTempInfoToday();
    },
  },
  mounted: async function() {
@@ -536,3 +548,8 @@ export default {
 };
 </script>
 
+<style scoped>
+.font-color {
+  color: black;
+}
+</style>

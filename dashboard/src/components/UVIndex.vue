@@ -1,5 +1,5 @@
 <template>
- <div class="highlights-item col-md-4 col-sm-6 col-xs-12 border-top">
+ <div class="highlights-item col-md-6 col-sm-6 col-xs-12 border-left border-right border-top card-body ">
    <div>
      <fusioncharts
        :type="type"
@@ -15,7 +15,7 @@
 
 <script>
 export default {
- props: ["highlights"],
+ props: ["highlights", "p_color", "s_color"],
  components: {},
  data() {
    return {
@@ -27,7 +27,7 @@ export default {
      renderAt: 'chart-container',
      datasource: {
        chart: {
-         caption: "Wind speed average",
+         caption: "Wind Gust",
          captionFontBold: "0",
          captionFontColor: "#000000",
          captionPadding: "30",
@@ -63,7 +63,7 @@ export default {
            {
              minvalue: this.highlights.windStatus.windGust,
              maxvalue: "50",
-             code: "#D8EDFF"
+             code: ""
            }
          ]
        },
@@ -74,7 +74,7 @@ export default {
                {
                  id: "val-label",
                  type: "text",
-                 text: this.highlights.windStatus.windGust + 'kn',
+                 text: "",
                  fontSize: "20",
                  font: "Source Sans Pro",
                  fontBold: "1",
@@ -123,34 +123,36 @@ export default {
      handler: function() {
          //this.highlights.windStatus.windGust=45;
        this.datasource.colorrange.color[0].maxvalue = this.highlights.windStatus.windGust;
+      this.datasource.colorrange.color[1].code= this.s_color;
+      this.datasource.colorrange.color[0].code= this.p_color
        this.datasource.colorrange.color[1].minvalue = this.highlights.windStatus.windGust;
-       this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windSpeed + ' /kn';
-       if(this.highlights.windStatus.windGust <=8){
-           this.datasource.colorrange.color[0].code= '#3cd5f1'
-       } else{
-           if(this.highlights.windStatus.windGust <= 12){
-                this.datasource.colorrange.color[0].code= '#28f51b'
-            } else {
-                if(this.highlights.windStatus.windGust <= 16){
-                    this.datasource.colorrange.color[0].code= ' #DAF7A6 '
-                } else{
-                    if(this.highlights.windStatus.windGust<= 20){
-                        this.datasource.colorrange.color[0].code= ' #FFC300 '
-                    }else{
-                        if(this.highlights.windStatus.windGust<= 25){
-                            this.datasource.colorrange.color[0].code= '#FF5733  '
-                        }
-                        else{
-                            if(this.highlights.windStatus.windGust<= 30){
-                                this.datasource.colorrange.color[0].code= ' #C70039   '
-                            }else{
-                                this.datasource.colorrange.color[0].code= ' #ea37ca   '
-                            }   
-                        }
-                    }
-                }
-            }
-       }
+       this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windGust + ' /kn';
+       //if(this.highlights.windStatus.windGust <=8){
+       //    this.datasource.colorrange.color[0].code= '#3cd5f1'
+       //} else{
+       //    if(this.highlights.windStatus.windGust <= 12){
+       //         this.datasource.colorrange.color[0].code= '#28f51b'
+       //     } else {
+       //         if(this.highlights.windStatus.windGust <= 16){
+       //             this.datasource.colorrange.color[0].code= ' #DAF7A6 '
+       //         } else{
+       //             if(this.highlights.windStatus.windGust<= 20){
+       //                 this.datasource.colorrange.color[0].code= ' #FFC300 '
+       //             }else{
+       //                 if(this.highlights.windStatus.windGust<= 25){
+       //                     this.datasource.colorrange.color[0].code= '#FF5733  '
+       //                 }
+       //                 else{
+       //                     if(this.highlights.windStatus.windGust<= 30){
+       //                         this.datasource.colorrange.color[0].code= ' #C70039   '
+       //                     }else{
+       //                         this.datasource.colorrange.color[0].code= ' #ea37ca   '
+       //                     }   
+       //                 }
+       //             }
+       //         }
+       //     }
+       //}
        
      },
      deep: true

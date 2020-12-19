@@ -1,14 +1,16 @@
 <template>
-  <div class="custom-content-card content-card card">
+<div style="display: block">
+  <div class="custom-content-card content-card card" >
     <div class="card-body pb-0">
     <div class="content-header h4 text-center pt-2 pb-3">Highlights</div>
-      <div class="row">
-        <uv-index :highlights="highlights"></uv-index>
-         <visibility :highlights="highlights"></visibility>
-        <wind-status :highlights="highlights"></wind-status>
+      <div class="row fc-charts">
+        <!--<wind-status :highlights="highlights" :p_color="p_color" :s_color="s_color"></wind-status>-->
+        <visibility :highlights="highlights" :p_color="p_color" :s_color="s_color"></visibility>
+        <uv-index :highlights="highlights" :p_color="p_color" :s_color="s_color"></uv-index>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -17,7 +19,7 @@ import Visibility from "./Visibility.vue";
 import WindStatus from "./WindStatus.vue";
 
 export default {
-  props: ["highlights"],
+  props: ["highlights", 'p_color', 's_color'],
   components: {
     "uv-index": UVIndex,
     "visibility": Visibility,

@@ -1,5 +1,5 @@
 <template>
- <div class="highlights-item col-md-4 col-sm-6 col-xs-12 border-left border-right border-top">
+ <div class="highlights-item col-md-6 col-sm-6 col-xs-12 border-left border-right border-top card-body ">
    <div>
      <fusioncharts
        :type="type"
@@ -16,37 +16,39 @@
 
 <script>
 export default {
- props: ["highlights"],
+ props: ["highlights", "p_color", "s_color"],
  components: {},
  methods: {
  setWindStatus: function (){
     var directionVal = void 0;
     var directionDisplay = void 0;
-    var colorRangeArr = [{ "minValue": "0", "maxValue": "30", "code": this.highlights.p_color }, // s - south
-    { "minValue": "30", "maxValue": "45", "code": this.highlights.s_color }, // ssw - south south west
-    { "minValue": "45", "maxValue": "75", "code": this.highlights.s_color }, // sw - south west
-    { "minValue": "75", "maxValue": "90", "code": this.highlights.s_color }, // wsw - west south west
-    { "minValue": "90", "maxValue": "120", "code": this.highlights.s_color }, // w - west
-    { "minValue": "120", "maxValue": "135", "code": this.highlights.s_color }, // wnw - west north west
-    { "minValue": "135", "maxValue": "165", "code": this.highlights.s_color }, // nw - north west
-    { "minValue": "165", "maxValue": "180", "code": this.highlights.s_color }, // nnw - north north west
-    { "minValue": "180", "maxValue": "210", "code": this.highlights.s_color }, // n - north
-    { "minValue": "210", "maxValue": "225", "code": this.highlights.s_color }, // nne - north north east
-    { "minValue": "225", "maxValue": "255", "code": this.highlights.s_color }, // ne - north east
-    { "minValue": "255", "maxValue": "270", "code": this.highlights.s_color }, // ene - east north east
-    { "minValue": "270", "maxValue": "300", "code": this.highlights.s_color }, // e - east
-    { "minValue": "300", "maxValue": "315", "code": this.highlights.s_color }, // ese - east south east
-    { "minValue": "315", "maxValue": "345", "code": this.highlights.s_color }, // se - south east
-    { "minValue": "345", "maxValue": "360", "code": this.highlights.s_color }];
-    switch (this.highlights.windStatus.windDirection) {
+    var directionCode= this.highlights.windStatus.derivedWindDirection;
+    console.log(this.p_color)
+    var colorRangeArr = [{ "minValue": "0", "maxValue": "30", "code": this.p_color }, // s - south
+    { "minValue": "30", "maxValue": "45", "code": this.s_color }, // ssw - south south west
+    { "minValue": "45", "maxValue": "75", "code": this.s_color }, // sw - south west
+    { "minValue": "75", "maxValue": "90", "code": this.s_color }, // wsw - west south west
+    { "minValue": "90", "maxValue": "120", "code": this.s_color }, // w - west
+    { "minValue": "120", "maxValue": "135", "code": this.s_color }, // wnw - west north west
+    { "minValue": "135", "maxValue": "165", "code": this.s_color }, // nw - north west
+    { "minValue": "165", "maxValue": "180", "code": this.s_color }, // nnw - north north west
+    { "minValue": "180", "maxValue": "210", "code": this.s_color }, // n - north
+    { "minValue": "210", "maxValue": "225", "code": this.s_color }, // nne - north north east
+    { "minValue": "225", "maxValue": "255", "code": this.s_color }, // ne - north east
+    { "minValue": "255", "maxValue": "270", "code": this.s_color }, // ene - east north east
+    { "minValue": "270", "maxValue": "300", "code": this.s_color }, // e - east
+    { "minValue": "300", "maxValue": "315", "code": this.s_color }, // ese - east south east
+    { "minValue": "315", "maxValue": "345", "code": this.s_color }, // se - south east
+    { "minValue": "345", "maxValue": "360", "code": this.s_color }];
+    switch (directionCode) {
         case "S":
             {
                 // south
                 for (var _i = 0; _i < colorRangeArr.length; _i++) {
                     if (_i === 0) {
-                        colorRangeArr[_i].code = this.highlights.p_color;
+                        colorRangeArr[_i].code = this.p_color;
                     } else {
-                        colorRangeArr[_i].code = this.highlights.s_color;
+                        colorRangeArr[_i].code = this.s_color;
                     }
                 }
                 directionVal = "15";
@@ -59,9 +61,9 @@ export default {
                 // south south west
                 for (var _i2 = 0; _i2 < colorRangeArr.length; _i2++) {
                     if (_i2 === 1) {
-                        colorRangeArr[_i2].code = this.highlights.p_color;
+                        colorRangeArr[_i2].code = this.p_color;
                     } else {
-                        colorRangeArr[_i2].code = this.highlights.s_color;
+                        colorRangeArr[_i2].code = this.s_color;
                     }
                 }
                 directionVal = "37.5";
@@ -74,9 +76,9 @@ export default {
                 // south west
                 for (var _i3 = 0; _i3 < colorRangeArr.length; _i3++) {
                     if (_i3 === 2) {
-                        colorRangeArr[_i3].code = this.highlights.p_color;
+                        colorRangeArr[_i3].code = this.p_color;
                     } else {
-                        colorRangeArr[_i3].code = this.highlights.s_color;
+                        colorRangeArr[_i3].code = this.s_color;
                     }
                 }
                 directionVal = "60";
@@ -89,9 +91,9 @@ export default {
                 // west south west
                 for (var _i4 = 0; _i4 < colorRangeArr.length; _i4++) {
                     if (_i4 === 3) {
-                        colorRangeArr[_i4].code = this.highlights.p_color;
+                        colorRangeArr[_i4].code = this.p_color;
                     } else {
-                        colorRangeArr[_i4].code = this.highlights.s_color;
+                        colorRangeArr[_i4].code = this.s_color;
                     }
                 }
                 directionVal = "82.5";
@@ -104,9 +106,9 @@ export default {
                 // west
                 for (var _i5 = 0; _i5 < colorRangeArr.length; _i5++) {
                     if (_i5 === 4) {
-                        colorRangeArr[_i5].code = this.highlights.p_color;
+                        colorRangeArr[_i5].code = this.p_color;
                     } else {
-                        colorRangeArr[_i5].code = this.highlights.s_color;
+                        colorRangeArr[_i5].code = this.s_color;
                     }
                 }
                 directionVal = "105";
@@ -119,9 +121,9 @@ export default {
                 // west north west
                 for (var _i6 = 0; _i6 < colorRangeArr.length; _i6++) {
                     if (_i6 === 5) {
-                        colorRangeArr[_i6].code = this.highlights.p_color;
+                        colorRangeArr[_i6].code = this.p_color;
                     } else {
-                        colorRangeArr[_i6].code = this.highlights.s_color;
+                        colorRangeArr[_i6].code = this.s_color;
                     }
                 }
                 directionVal = "127.5";
@@ -134,9 +136,9 @@ export default {
                 // north west
                 for (var _i7 = 0; _i7 < colorRangeArr.length; _i7++) {
                     if (_i7 === 6) {
-                        colorRangeArr[_i7].code = this.highlights.p_color;
+                        colorRangeArr[_i7].code = this.p_color;
                     } else {
-                        colorRangeArr[_i7].code = this.highlights.s_color;
+                        colorRangeArr[_i7].code = this.s_color;
                     }
                 }
                 directionVal = "150";
@@ -149,9 +151,9 @@ export default {
                 // north north west
                 for (var _i8 = 0; _i8 < colorRangeArr.length; _i8++) {
                     if (_i8 === 7) {
-                        colorRangeArr[_i8].code = this.highlights.p_color;
+                        colorRangeArr[_i8].code = this.p_color;
                     } else {
-                        colorRangeArr[_i8].code = this.highlights.s_color;
+                        colorRangeArr[_i8].code = this.s_color;
                     }
                 }
                 directionVal = "172.5";
@@ -164,9 +166,9 @@ export default {
                 // north
                 for (var _i9 = 0; _i9 < colorRangeArr.length; _i9++) {
                     if (_i9 === 8) {
-                        colorRangeArr[_i9].code = this.highlights.p_color;
+                        colorRangeArr[_i9].code = this.p_color;
                     } else {
-                        colorRangeArr[_i9].code = this.highlights.s_color;
+                        colorRangeArr[_i9].code = this.s_color;
                     }
                 }
                 directionVal = "195";
@@ -179,9 +181,9 @@ export default {
                 // north north east
                 for (var _i10 = 0; _i10 < colorRangeArr.length; _i10++) {
                     if (_i10 === 9) {
-                        colorRangeArr[_i10].code = this.highlights.p_color;
+                        colorRangeArr[_i10].code = this.p_color;
                     } else {
-                        colorRangeArr[_i10].code = this.highlights.s_color;
+                        colorRangeArr[_i10].code = this.s_color;
                     }
                 }
                 directionVal = "217.5";
@@ -194,9 +196,9 @@ export default {
                 // north east
                 for (var _i11 = 0; _i11 < colorRangeArr.length; _i11++) {
                     if (_i11 === 10) {
-                        colorRangeArr[_i11].code = this.highlights.p_color;
+                        colorRangeArr[_i11].code = this.p_color;
                     } else {
-                        colorRangeArr[_i11].code = this.highlights.s_color;
+                        colorRangeArr[_i11].code = this.s_color;
                     }
                 }
                 directionVal = "240";
@@ -209,9 +211,9 @@ export default {
                 // east north east
                 for (var _i12 = 0; _i12 < colorRangeArr.length; _i12++) {
                     if (_i12 === 11) {
-                        colorRangeArr[_i12].code = this.highlights.p_color;
+                        colorRangeArr[_i12].code = this.p_color;
                     } else {
-                        colorRangeArr[_i12].code = this.highlights.s_color;
+                        colorRangeArr[_i12].code = this.s_color;
                     }
                 }
                 directionVal = "262.5";
@@ -224,9 +226,9 @@ export default {
                 // east
                 for (var _i13 = 0; _i13 < colorRangeArr.length; _i13++) {
                     if (_i13 === 12) {
-                        colorRangeArr[_i13].code = this.highlights.p_color;
+                        colorRangeArr[_i13].code = this.p_color;
                     } else {
-                        colorRangeArr[_i13].code = this.highlights.s_color;
+                        colorRangeArr[_i13].code = this.s_color;
                     }
                 }
                 directionVal = "285";
@@ -239,9 +241,9 @@ export default {
                 // east south east
                 for (var _i14 = 0; _i14 < colorRangeArr.length; _i14++) {
                     if (_i14 === 13) {
-                        colorRangeArr[_i14].code = this.highlights.p_color;
+                        colorRangeArr[_i14].code = this.p_color;
                     } else {
-                        colorRangeArr[_i14].code = this.highlights.s_color;
+                        colorRangeArr[_i14].code = this.s_color;
                     }
                 }
                 directionVal = "307.5";
@@ -254,9 +256,9 @@ export default {
                 // south east
                 for (var _i15 = 0; _i15 < colorRangeArr.length; _i15++) {
                     if (_i15 === 14) {
-                        colorRangeArr[_i15].code = this.highlights.p_color;
+                        colorRangeArr[_i15].code = this.p_color;
                     } else {
-                        colorRangeArr[_i15].code = this.highlights.s_color;
+                        colorRangeArr[_i15].code = this.s_color;
                     }
                 }
                 directionVal = "330";
@@ -269,9 +271,9 @@ export default {
                 // south south east
                 for (var _i16 = 0; _i16 < colorRangeArr.length; _i16++) {
                     if (_i16 === 15) {
-                        colorRangeArr[_i16].code = this.highlights.p_color;
+                        colorRangeArr[_i16].code = this.p_color;
                     } else {
-                        colorRangeArr[_i16].code = this.highlights.s_color;
+                        colorRangeArr[_i16].code = this.s_color;
                     }
                 }
                 directionVal = "352.5";
@@ -284,7 +286,7 @@ export default {
             break;
     }
     this.datasource.colorRange.color = colorRangeArr;
-    this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windGust;
+    this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windSpeed;
     this.datasource.annotations.groups[0].items[0].color = this.p_color;
     this.datasource.annotations.groups[0].items[1].text = directionDisplay;
     this.datasource.annotations.groups[0].items[1].color = this.p_color;
@@ -303,13 +305,16 @@ export default {
     type: 'angulargauge',
     width: '100%',
     height: '100%',
-    containerBackgroundOpacity:'0.8',
-    dataFormat: 'json',
+    containerbackgroundopacity: 0.8,
+    dataformat: 'json',
     renderAt: 'chart-container',
     creditLabel: false,
     datasource: {
         chart: {
-            caption: "Wind speed average2",
+            caption: "Wind speed",
+            captionFontBold: "0",
+            captionFontColor: "#000000",
+            captionPadding: "30",
             bgColor:"#ffffff",
             bgAlpha:"0",
             manageresize: "1",
@@ -332,11 +337,11 @@ export default {
             baseFontBold: "1",
             gaugeFillAlpha: "10",
             showBorder: "0",
-            showToolTip: "0"
+            showToolTip: "0",
         },
 
         colorRange: {
-            "color": ""
+            color: ""
         },
 
         annotations: {
@@ -349,7 +354,7 @@ export default {
                     y: "$gaugeCenterY - 15",
                     color: "",
                     bold: "0",
-                    fontSize: "16",
+                    fontSize: "22",
                     font: "Roboto"
                 }, {
                     id: "speeddir",
@@ -359,7 +364,7 @@ export default {
                     y: "$gaugeCenterY + 10",
                     color: "",
                     bold: "0",
-                    fontSize: "16",
+                    fontSize: "22",
                     font: "Source Sans Pro Light"
                 }]
             }]
@@ -400,8 +405,8 @@ export default {
    highlights: {
      handler: function() {
         this.setWindStatus();
-        this.datasource.annotations[0].items[0].text = this.highlights.windStatus.windGust;
-        this.datasource.annotations[0].items[2].text= this.highlights.windStatus.windDirection;
+        //this.datasource.annotations.groups[0].items[0].text = this.highlights.windStatus.windGust;
+        //this.datasource.annotations.groups[0].items[1].text= this.highlights.windStatus.windDirection;
      },
      deep: true
    }

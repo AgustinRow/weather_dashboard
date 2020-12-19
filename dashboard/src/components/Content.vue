@@ -1,7 +1,7 @@
 <template>
   <div id="position: relative;">
     <maps :highlights="highlights"></maps>
-    <today-highlights :highlights="highlights"></today-highlights>
+    <today-highlights :highlights="highlights" :p_color="p_color" :s_color="s_color"></today-highlights>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import Maps from './Maps.vue'
 import Highlights from './Highlights.vue'
 
 export default {
-  props: ["highlights", 'maps'],
+  props: ["highlights", 'maps', 'p_color', 's_color'],
   components: {
     'maps': Maps,
     'today-highlights': Highlights
